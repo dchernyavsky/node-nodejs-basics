@@ -1,6 +1,16 @@
+import { fork } from "child_process";
+
 const spawnChildProcess = async (args) => {
-    // Write your code here
+  const childProcess = await fork(
+    `${import.meta.dirname}/files/script.js`,
+    args
+  );
+
+  process.stdin.on("data", (input) => {
+    childProcess.send(input);
+  });
+
+  childProcess.stdout?.pipe(process.stdout);
 };
 
-// Put your arguments in function call to test this functionality
-spawnChildProcess( /* [someArgument1, someArgument2, ...] */);
+spawnChildProcess(/* ["someArgument1", "someArgument2"] */);

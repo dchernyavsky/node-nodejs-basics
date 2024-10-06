@@ -1,5 +1,12 @@
+import fs from "fs";
+
 const remove = async () => {
-    // Write your code here 
+  const filePath = "src/fs/files/wrongFilename.txt";
+  fs.unlink(filePath, (error) => {
+    if (error) {
+      throw new Error("FS operation failed");
+    }
+  });
 };
 
 await remove();
